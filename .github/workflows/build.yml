@@ -22,12 +22,17 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.0'
           channel: 'stable'
           cache: true
 
+      # اصلاح نام پکیج نامعتبر در pubspec.yaml
+      - name: Fix Package Name
+        run: |
+          sed -i 's/^name: .*/name: cooler_app/' pubspec.yaml
+
+      # ساخت پوشه اندروید با نام پکیج معتبر
       - name: Generate Android Files
-        run: flutter create . --platforms=android --org com.example
+        run: flutter create . --platforms=android --org com.example --project-name cooler_app
 
       - name: Install dependencies
         run: flutter pub get
